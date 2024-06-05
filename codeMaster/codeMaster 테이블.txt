@@ -1,0 +1,142 @@
+CREATE TABLE member(
+id varchar(20) NOT NULL PRIMARY KEY,
+email varchar(30) NOT NULL UNIQUE,
+pw varchar(10) NOT NULL,
+region varchar(20) NOT NULL,
+name varchar(20) NOT NULL,
+state boolean NOT NULL,
+file_name varchar(100)
+);
+
+CREATE TABLE post(
+NO int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id varchar(20),
+region varchar(20) NOT null,
+title varchar(40) NOT null,
+content varchar(600) NOT NULL,
+good int NOT NULL,
+report int NOT NULL,
+category varchar(10) NOT NULL,
+FOREIGN KEY (id) REFERENCES MEMBER (id)
+);
+
+
+CREATE TABLE post_attach(
+NO int,
+file_name varchar(100)NOT NULL,
+FOREIGN KEY (no) REFERENCES post (no)
+);
+
+
+CREATE TABLE likepost(
+    id VARCHAR(20),
+    NO INT,
+    PRIMARY KEY (id, NO),
+    FOREIGN KEY (id) REFERENCES post (id),
+    FOREIGN KEY (NO) REFERENCES post (NO)
+);
+
+CREATE TABLE post_comment(
+c_no int NOT NULL PRIMARY KEY,
+NO int NOT NULL,
+id varchar(20) NOT NULL,
+cmt varchar(40) NOT NULL,
+FOREIGN KEY (no) REFERENCES post (no),
+FOREIGN KEY (id) REFERENCES member (id)
+);
+
+
+CREATE TABLE stopmember(
+id varchar (20)NOT NULL,
+s_text varchar(100)NOT null,
+today datetime NOT null,
+fininsh datetime not null,
+FOREIGN KEY (id) REFERENCES member (id)
+);
+
+
+
+
+
+
+CREATE TABLE follow(
+id varchar(20)NOT null,
+FOREIGN KEY (id) REFERENCES member (id)
+);
+
+
+
+CREATE TABLE membergroup(
+gno int NOT NULL PRIMARY KEY,
+g_id varchar(20),
+gname varchar(20),
+g_region varchar(20),
+FOREIGN KEY(g_id) REFERENCES member(id)
+);
+
+ALTER TABLE membergroup modify g_id varchar(20)NOT null;
+
+
+
+CREATE TABLE groupPost(
+g_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+gno int NOT NULL,
+id varchar(20),
+g_title varchar(40)NOT null,
+g_content varchar(100)NOT null,
+g_like int NOT NULL,
+g_report int NOT NULL,
+FOREIGN KEY(id) REFERENCES member(id),
+FOREIGN KEY(gno) REFERENCES membergroup(gno)
+);
+
+
+
+CREATE TABLE group_attach(
+g_no int NOT NULL,
+file_name varchar(100) NOT NULL,
+FOREIGN KEY(g_no) REFERENCES groupPost(g_no)
+);
+
+CREATE TABLE groupjoin(
+gno int NOT NULL,
+id varchar(20)NOT null,
+FOREIGN KEY(id) REFERENCES member(id),
+FOREIGN KEY(gno) REFERENCES membergroup(gno)
+);
+
+
+
+
+CREATE TABLE g_join(
+mo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+gno int NOT NULL,
+id varchar(20) NOT NULL,
+m_name varchar(40) NOT NULL,
+cnt int NOT NULL,
+m_contents varchar(100) NOT NULL,
+FOREIGN KEY(gno) REFERENCES membergroup(gno),
+FOREIGN KEY(id) REFERENCES member(id)
+);
+
+
+
+CREATE TABLE g_member(
+id varchar(20)NOT null,
+mo_no int NOT null,
+gno int NOT null,
+FOREIGN KEY(mo_no) REFERENCES g_join(mo_no),
+FOREIGN KEY(id) REFERENCES member(id),
+FOREIGN KEY(gno) REFERENCES membergroup(gno)
+)
+
+
+
+CREATE TABLE notice(
+memo varchar(300)
+)
+
+
+
+
+

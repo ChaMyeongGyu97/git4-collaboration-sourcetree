@@ -1,0 +1,2 @@
+fork-clone-브랜치따기-작업-commit-push-자신의리포지토리-checkout( 이동)
+-pull-merge-push//-update branch-delete 브랜치,원격브랜치
